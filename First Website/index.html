@@ -1,0 +1,76 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="main.css"/>
+		<link href="position.html"/>
+		<title> My Website </title>
+		<script> 
+			function banner(){ 
+				var text = confirm("Do you really want to use Bing instead of Google?"); 
+				return text; 
+			}
+			
+			function answer(){
+				var radio = document.getElementsByName("trivia"); 
+				var selection = false; 
+				var message = "";
+				for( var i = 0; i < radio.length; i++) { 
+					if(radio[i].value == "36.5%" && radio[i].checked == true) { 
+						selection = true; 
+					} //end if statement 
+				} //end for loop
+				if(selection == true) {
+					message = message + "<b><p style='color:green'>Way to go!</p>
+					</b>"; 
+				} else { 
+					message = message + "<b><p style='color:red'>Try again my
+					friend.</p></b>"; 
+				}
+				document.getElementById("response").innerHTML = message;
+			} //end fuction answer
+		</script>
+	</head>
+	<body id="background">
+		<a href="http://bing.com" onclick="return banner()">
+		<header> <img src="https://tse1.mm.bing.net/th?&id=OIP.M4ef9467e6a135fa9d5abd0b6a5264713H0&w=300&h=267&c=0&pid=1.9&rs=0&p=0&r=0" /> </header> </a>
+		<nav id="navmenu">
+			<li class="navitem"> <a id="homeLink1"  href="index.html"> Home </a> </li> 
+			<li class="navitem"> <a id="homeLink2"  href="menu.html"> Games </a> </li> 
+			<li class="navitem"> <a id="homeLink3"  href="menu.html"> Videos </a> </li>
+		</nav>
+		<span class="wrap-text"> <h1> Fried Food is Delicious </h1> </span> 
+		<div id="rightside"> America is the country with the highest <b> obesity </b> rate. The reason for this is that America <u> eats</u> lots of fried and unhealthy food for every meal of the day. It also is the country with the stupidest 2016 <i> presidential election. </i> </br> </div>
+		<div id="leftside"> America is the country with the highest <b> obesity </b> rate. The reason for this is that America <u> eats</u> lots of fried and unhealthy food for every meal of the day. It also is the country with the stupidest 2016 <i> presidential election. </i> </br> </div> <br/> <br/> <br/> <br/> <br/>
+		<div id="one"> Fried </div>
+		<div id="two"> Food </div>
+		<div id="three"> Good </div>
+		<div class="wrap-list">
+			<ol> 
+				<li class="listitem"> America has Fried, Fast, and Unhealthy Food available to everyone</li>
+				<li class="listitem"> America has many cool things about it </li>
+				<li class="listitem"> America's 2016 election is really, really stupid </li> 
+			</ol>
+		</div>
+		<h2> Obesity Trivia Question </h2>
+		<p class="paragraph"> What is the obesity percentage for adults in America? </p> </br>
+		<div class="wrap-trivia"> 
+			<form> 
+				<div id="response"></div>
+				<input type="radio" name="trivia" value="36%">36% </br>
+				<input type="radio" name="trivia" value="36.5%"> 36.5%</br>
+				<input type="radio" name="trivia" value="37%"> 37%</br>
+				<input type="radio" name="trivia" value="50%"> 50%</br>
+				<input type="button" id="button" value="Click Here" onclick="answer(try again my friend)"> 
+			</form>
+		</div>
+		<img src="http://thumbs.dreamstime.com/thumbimg_3655/36559703.jpg" />
+		<img src="http://thumbs.dreamstime.com/thumbimg_5465/54658955.jpg" />
+		<video width="400" height="220" controls autoplay>
+			<source src="https://s3-us-west-2.amazonaws.com/simplycoding/IntroToWebsites/Lesson5.4.mp4"type="video/mp4"> 
+		</video> 
+		<audio width="400" height="220" controls autoplay>
+			<source src="http://www.w3schools.com/tags/horse.mp3"type="audio/mpeg"> 
+		</audio> </br>
+		<footer> <center> Foooooooooooooooooter </center> </footer> <hr>
+		<center> Jaret Dalrymple <a class="FavoriteLink" href="https://en.wikipedia.org/wiki/Canada"> My Favorite Website </a> </center>
+	</body>
+</html>

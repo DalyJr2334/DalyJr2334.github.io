@@ -1,0 +1,186 @@
+b{
+	color:green;
+	font-size:18px;
+}
+
+.listitem{
+	color:red;
+	font-size:20px;
+}
+
+.paragraph{
+	color:green;
+	font-size:30px;
+}
+
+#background{
+	background-color:white;
+	height:1500px;
+}
+
+#button{
+	width:75px;
+	height:25px;
+	color:white;
+	background-color:black;
+	border-radius:15px;
+}
+
+header{
+	width:300px;
+	height:267px;
+	border:2px:solid black;
+	background-color:#cc0000;
+	margin-bottom:50px;
+}
+
+footer{
+	width:1568px;
+	height:80px;
+	font-size:50px;
+	border:5px:solid black;
+	background-color:#cc0000;
+}
+
+.wrap-trivia{
+	width:80px;
+	height:110px;
+	border:5px double yellow;
+	padding:10px;
+}
+
+.wrap-list{
+	width:390px;
+	height:140px;
+	border:5px dashed green;
+}
+
+.wrap-text{
+	color:blue;
+	font-size:40px;
+}
+
+#one{
+	width:150px;
+	height:150px;
+	background-color:red;
+	display:inline-block;
+	position:absolute;
+	left:35%;
+}
+
+#two{
+	width:150px;
+	height:150px;
+	background-color:blue;
+	display:inline-block;
+	position:absolute;
+	z-index:1;
+	left:55%;
+}
+
+#three{
+	width:150px;
+	height:150px;
+	background-color:purple;
+	display:inline-block;
+	position:absolute;
+	z-index:2;
+	left:75%;
+}
+
+.navitem{
+	list-style-type:none;
+	display:inline;
+	padding-right:1.5em;
+}
+
+#navmenu{
+	width:250px;
+	height:30px;
+	margin:auto;
+}
+
+/*homeLink1 START*/
+#homeLink1:link{
+	color:black;
+}
+
+#homeLink1:visited{
+	color:white;
+}
+
+#homeLink1:hover{
+	color:black;
+}
+
+#homeLink1:active{
+	color:gray;
+}
+/*homeLink1 FINISH*/
+
+/*homeLink2 START*/
+#homeLink2:link{
+	color:blue;
+}
+
+#homeLink2:visited{
+	color:#0099ff;
+}
+
+#homeLink2:hover{
+	color:#00ffff;
+}
+
+#homeLink2:active{
+	color:#000066;
+}
+/*homeLink2 FINISH*/
+
+/*homelink3 START*/
+#homeLink3:link{
+	color:red;
+}
+
+#homeLink3:visited{
+	color:#cc0000;
+}
+
+#homeLink3:hover{
+	color:#800000;
+}
+
+#homeLink3:active{
+	color:#ffa1a1;
+}
+/*homeLink3 FINISH*/
+
+/*FavoriteLink START*/
+.FavoriteLink:link{
+	color:purple;
+}
+
+.FavoriteLink:visited{
+	color:#6600ff;
+}
+
+.FavoriteLink:hover{
+	color:#990099;
+}
+
+.FavoriteLink:hover{
+	color:#6600cc;
+}
+/*FavoriteLink FINISH*/
+
+#rightside{
+	float:right;
+	width:750px;
+	border:3px solid blue
+}
+
+#leftside{
+	float:left;
+	width:750px;
+	border:3px solid blue
+}
