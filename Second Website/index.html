@@ -1,0 +1,255 @@
+<html>
+	<head>
+		<link type="text/css"rel="stylesheet" href="stylesheet.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  
+		<title> Comment Post </title>
+		<script>
+			function validate(){
+				//Name Validation
+				var name = document.getElementById("name");
+				var blank_field = false;
+				if(name.value == ""){
+					name.style.backgroundColor = "pink";
+					blank_field = true;
+				}else{
+					name.style.backgroundColor = "lightgreen";
+				}
+
+				//Title Validation
+				var title = document.getElementById("title");
+				var blank_field = false;
+				if(title.value == ""){
+					title.style.backgroundColor = "pink";
+					blank_field = true;
+				}else{
+					title.style.backgroundColor = "lightgreen";
+				}
+
+				//Comment Validation
+				var comment = document.getElementById("comment");
+				var blank_field = false;
+				if(comment.value == ""){
+					comment.style.backgroundColor = "pink";
+					blank_field = true;
+				}else{
+					comment.style.backgroundColor = "lightgreen";
+				}
+
+				//Drop Down Menu Validation
+				var text_color = document.getElementById("text_color");
+				var bg_color = document.getElementById("bg_color");
+				if(text_color.value == "Choose a Color"){
+					text_color.style.border = "2px solid red";
+					blank_field = true;
+				}else if (bg_color.value == "Choose a Color") {
+					bg_color.style.border = "2px solid red";
+					blank_field = true;
+				}else {
+					text_color.style.border = "none";
+					bg_color.style.border = "none";
+				}
+
+				//Radio Button Validation
+				var icon = document.getElementsByName("icon");
+				var radiobtns = document.getElementById("radiobtns");
+				var blank_radio = true;
+				for(var i=0; i < icon.length; i++){
+					if(icon[i].checked == true){
+						blank_radio = false;
+					}
+				}
+
+				if(blank_radio == true){
+					radiobtns.style.border = "2px solid red";
+					blank_field = true;
+				}else{
+					radiobtns.style.border = "none";
+				}
+				//Error Message
+				var message = document.getElementById("message");
+				if(blank_field == true){
+					message.innerHTML = "<h3 style='color:red;'>You missed a spot! </h3>";
+				}else{
+					message.innerHTML = "";
+
+				}
+				add();
+			}//end function validate
+
+			var array = [];
+
+			function add(){
+				/*Variables*/
+				var name = document.getElementById("name");
+				var title = document.getElementById("title");
+				var comment = document.getElementById("comment");
+				var icon = document.getElementsByName("icon");
+				var icon_value;
+				var text_color=document.getElementById("text_color"); 
+				var bg_color=document.getElementById("bg_color");
+
+				for(var i=0; i < icon.length; i++){
+					if(icon[i].checked == true){
+						icon_value = icon[i].value;
+					}
+				}
+
+				var storage = {name: name.value, title: title.value, comment: comment.value, icon: icon_value, text_color: text_color.value, bg_color: bg_color.value};
+
+				array.push(storage);
+
+				show();
+			}//end function add
+
+			function show(){
+				var display = document.getElementById("display");
+				var post = "";
+
+				for(var i=0; i < array.length; i++){
+					post+= "<input type='checkbox' onclick='gone("+i+");'/>";
+					post += "<div id='usercomment'style='background-color:"+array[i].bg_color+";'>"; 
+					post += "<span style='color:"+array[i].text_color+";'>"; 
+					post += "<img src='"+array[i].icon+ "'class='icon' />";
+					post += "<strong> "+array[i].name+ "</strong><br>";
+					post += "<strong> "+array[i].title+ "</strong><br>";
+					post += "<strong> "+array[i].comment+ "</strong><br>";
+					post += "</span>";
+					post += "</div>";
+				}
+
+				display.innerHTML = post;
+
+			}//end function show
+
+			function gone(index){
+				array.splice(index,1);
+				show();
+			}
+		</script>
+	</head>
+	<body>
+		<div class="container"><!-- start container div -->
+
+			<!-- start logo row -->
+			<div class="row">
+				<div class="col-xs-12 col-sm-4" id="logo"> 
+					<img class="img-responsive" class="image" src="https://legendsportsclothing.com/wp-content/uploads/2015/11/summit_sahs_logo.png"/>
+				</div>
+			</div> <!-- end logo row -->
+
+			<!-- start menu row -->
+			<div class="row">
+				<div class="col-xs-12" id="menu">
+					<ul class="nav nav-tabs">
+						<li> 
+							<a href="http://sahs.summitacademyschools.org/"> Home </a> 
+						</li>
+						<li> 
+							<a href="http://sahs.summitacademyschools.org/apps/classes/">Class Webpages </a> 
+						</li>
+						<li> 
+							<a href="https://summithighschool.usoe-dcs.org/Login/"> Grades </a> 
+						</li>
+					</ul>
+				</div>
+			</div> <!-- end menu row -->
+
+			<!-- start comment row -->
+			<div class="row">
+
+				<!-- start mobile div -->
+				<div class="col-xs-12 col-sm-8" id="comments"> COMMENTS
+
+					<!-- start form div -->
+					<div class="col-xs-12 col-sm-4" id="form"> 
+						<header id="header"> Leave a Comment </header>
+						<div id="message"></div>
+
+						<!-- start form -->
+						<form class="form-inline"> 
+							<label> 
+								Name: 
+							</label>
+							<input type="text" class="form-control" id="name" placeholder="Enter Name">
+							<label> 
+								Color: 
+							</label>
+							<select id="text_color" class="form-control">
+								<option> 
+									Choose a Color 
+								</option>
+								<option> 
+									Blue 
+								</option> 
+								<option> 
+									Red 
+								</option> 
+								<option> 
+									Green 
+								</option> 
+								<option> 
+									Gray 
+								</option> 
+							</select>
+						</form>
+						<!-- end form -->
+
+						<!-- start form -->
+						<form class="form-horizontal">
+							<label class="control-label"> 
+								Title: 
+							</label>
+							<input type="text" class="form-control" id="title" placeholder="Enter Comment Title">
+							<label> 
+								Background Color: 
+							</label>
+							<select id="bg_color"class="form-control"> 
+								<option> 
+									Choose a Color
+								</option>
+								<option> 
+									Blue 
+								</option>
+								<option> 
+									Red 
+								</option>
+								<option> 
+									Green 
+								</option>
+								<option> 
+									Gray 
+								</option>
+							</select>
+						</form>
+						<!-- end form -->
+
+						<!-- start form -->
+						<form class="form-inline" id="radiobtns">
+							<label class="control-label"> 
+								Icons: 
+							</label>
+							<input type="radio" name="icon" value="http://findicons.com/files/icons/2229/social_media_mini/48/website.png">
+							<img src="http://findicons.com/files/icons/2229/social_media_mini/48/website.png" id="Img1" class="icon"/>
+							<input type="radio" name="icon" value="http://findicons.com/files/icons/982/dellipack_2/128/school.png">
+							<img src="http://findicons.com/files/icons/982/dellipack_2/128/school.png" id="Img2" class="icon"/>
+							<input type="radio" name="icon" value="http://findicons.com/files/icons/547/sport/128/baseball_ball.png">
+							<img src="http://findicons.com/files/icons/547/sport/128/baseball_ball.png" id="Img3" class="icon"/>
+							<input type="radio" name="icon" value="http://findicons.com/files/icons/547/sport/128/soccer_ball.png">
+							<img src="http://findicons.com/files/icons/547/sport/128/soccer_ball.png" id="Img4" class="icon"/>
+						</form>
+						<!-- end form -->
+
+						<label class="control-label"> 
+							Comment: 
+						</label> <br>
+						<textarea class="form-control" id="comment" rows="8"> 
+						</textarea> <br>
+						<input class="btn btn-default" type="button" value="Submit Comment" onclick="validate()">
+					</div> <!-- end form div -->
+					<div id="display"> </div>
+				</div> <!-- end mobile div -->
+			</div> <!-- end comments row -->
+		</div> <!-- end container div -->
+	</body>
+</html>

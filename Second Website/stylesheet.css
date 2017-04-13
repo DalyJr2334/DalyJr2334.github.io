@@ -1,0 +1,77 @@
+#logo{
+	margin-top:10px;
+	height:250px;
+	width:250px;
+	border:5px solid #000066;
+	padding-top:10px;
+	padding-bottom:10px;
+	background: radial-gradient(100% 100% at 50% 50%, yellow, blue);
+}
+
+#menu{
+	border:5px solid #000066;
+	margin-top:10px;
+	width:335px;
+}
+
+#comments{
+	border:5px solid #000066;
+	margin-top:5px;
+	height:665px;
+	width:100%;
+	background: radial-gradient(100% 100% at 50% 50%, blue, yellow);
+}
+
+#form{
+	border:5px solid yellow;
+	border-radius:20px;
+	height:635px;
+	width:500px;
+	float:right;
+	margin-top:10px;
+}
+
+#header{
+	text-align:center;
+	background-color:black;
+	font-size:2.5em;
+	text-decoration:bold;
+	color:white;
+	border-radius:15px;
+	margin-left:-15px;
+	margin-right:-15px;
+	margin-bottom:15px;
+}
+
+#Img1{
+	height:60px;
+	width:60px;
+	border:3px solid #000066;
+	border-radius:10px;
+}
+
+#Img2{
+	height:60px;
+	width:60px;
+	border:3px solid #000066;
+}
+
+#Img3{
+	height:60px;
+	width:60px;
+	border:3px solid #000066;
+	border-radius:360px;
+}
+
+#Img4{
+	height:60px;
+	width:60px;
+	border:3px solid #000066;
+	border-radius:360px;
+}
+
+#usercomment{
+	border:2px solid purple;
+	border-radius:15px;
+	width:250px;
+}
