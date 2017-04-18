@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<title> Evil Space Robots </title>
+		<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+		<script>
+			function start(){
+				sjs.open();
+				var menu_text = new sjs.Text("Evil Space Robots", 28, "blue");
+				menu_text.centerH();
+
+				var designBtn = new sjs.Button("Design Level", function(){
+					window.location = "platform.html";
+				});
+				designBtn.moveTo(190,220);
+
+				var level1Btn = new sjs.Button("Level 1", function(){
+					window.location = "level1.html";
+				});
+
+				level1Btn.center();
+
+				var controls_text = new sjs.Text("Controls", 30, "red");
+				controls_text.moveTo(70,250);
+
+				var left_text = new sjs.Text("Left Key- Move Left", 18, "black");
+				left_text.moveTo(275,275);
+
+				var right_text = new sjs.Text("Right Key- Move Right", 18, "black");
+				right_text.moveTo(275,295);
+
+				var up_text = new sjs.Text("Up Key- Jump", 18, "black");
+				up_text.moveTo(275,315);
+
+				var down_text = new sjs.Text("Down Key- Shoot Lasers", 18, "black");
+				down_text.moveTo(275,335);
+
+				var arrows = new sjs.Image("Images/arrow_keys.png")
+				arrows.setSize(100,100);
+				arrows.moveTo(70,275);
+
+			}//Function Start
+		</script>
+	</head>
+	<body onload="start()">
+		<h1> Evil Space Robots </h1>
+
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>

@@ -1,0 +1,338 @@
+<html>
+	<head>
+		<title> Evil Space Robots </title>
+		<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+		<script>
+			var level = [];
+			function start(){
+				//Background Properties
+				sjs.open("target", 800, 500);
+				var background = new sjs.Image("Images/background.png"); 
+				background.setSize(2500, 500);
+
+				var testBtn = new sjs.Button("Test Level", function(){
+					localStorage.setItem('level', sjs.saveImageArray(level));
+					window.open('test.html', '_blank');
+				});
+				testBtn.moveTo(100,0);
+
+				//Music Reminder
+				setTimeout(function(){
+					var music_text = new sjs.Text("Press SpaceBar to Toggle Music",28,"blue");
+					music_text.centerH();
+				},2000);
+
+				//Player Properties
+				var player = new sjs.Image("Images/r_idle.png");
+				player.type = "player";
+				player.setSize(85,93);
+				player.setGravity(3);
+				player.bottom();
+				player.friction = .3;
+				player.noBounds = true;
+
+				sjs.scrollable(player,background);
+
+				//Player Movement Controls
+				var r_images = ["Images/r_walk-0.png", "Images/r_walk-1.png", "Images/r_walk-2.png", "Images/r_walk-3.png", "Images/r_walk-4.png", "Images/r_walk-5.png", "Images/r_walk-6.png", "Images/r_walk-7.png"];
+
+				var l_images = ["Images/l_walk-0.png", "Images/l_walk-1.png", "Images/l_walk-2.png", "Images/l_walk-3.png", "Images/l_walk-4.png", "Images/l_walk-5.png", "Images/l_walk-6.png", "Images/l_walk-7.png"];
+
+				var r_facing = true;
+				var r_track = 0;
+				var l_track = 0; 
+
+				//Start Right Key
+				sjs.keyDown(RIGHT_KEY, function(){
+					r_facing = true;
+					r_track = r_track + 1;
+					player.pushRight(2);
+					player.setImage(r_images[r_track]);
+					if(r_track == 7){
+						r_track = 0;
+					} 
+					if(r_track >= 8){
+						player.setImage("Images/r_jump.png");
+					}
+				});//End Right Key 
+
+				//Start Left Key
+				sjs.keyDown(LEFT_KEY, function(){
+					r_facing = false;
+					l_track = l_track + 1;
+					player.pushLeft(2);
+					player.setImage(l_images[l_track]);
+					if(l_track == 7){
+						l_track = 0;
+					} 
+					if(l_track >= 8){
+						player.setImage("Images/l_jump.png");
+					}
+				});//End Left Key
+
+				//Jumping Code
+				var canJump = true;
+
+				//KeyDown Function
+				sjs.keyDown(UP_KEY, function(){
+					if(canJump == true){
+						canJump = false;
+						player.pushUp(55);
+						if(r_facing == true){ 
+							player.setImage("Images/r_jump.png");
+							r_track = 8;
+						}else{ 
+							player.setImage("Images/l_jump.png");
+							l_track = 8; 
+						}
+					}
+				});//End KeyDown Function
+
+				//EventListener Function
+				window.addEventListener("keyup", function(e){
+					if(e.keyCode == RIGHT_KEY){
+						player.setImage("Images/r_idle.png");
+						r_track = 0;
+					}else if(e.keyCode == LEFT_KEY){
+						player.setImage("Images/l_idle.png");
+						l_track = 0; 
+					}
+				});//End EventListener Function
+				//End Player Movement Controls
+				//End Player Properties
+
+				//OnHit Functions
+				sjs.onHit("player","platform",function(x,y){
+					sjs.stoppedBy(x,y);
+					if(canJump == false){
+						canJump = true;
+						r_track = 0;
+						l_track = 0;
+					}
+				});
+				sjs.onHit("player","bottom_screen",function(x,y){
+					sjs.stoppedBy(x,y);
+					if(canJump == false){
+						canJump = true;
+						r_track = 0;
+						l_track = 0;
+					}
+				});
+
+				sjs.onHit("player",["right_screen","left_screen","top_screen"],function(x,y){
+					sjs.stoppedBy(x,y); 
+				});
+
+				sjs.onHit("enemy","bottom_screen", function(x,y){
+					sjs.stoppedBy(x,y);
+				});
+
+				sjs.onHit("enemy",["left_screen","right_screen"], function(x,y){
+					sjs.bounceOff(x,y);
+				});
+
+				sjs.onHit("enemy",["platform", "jump_pad"], function(x,y){
+					if(x.isAboveOf(y) == true){
+						sjs.stoppedBy(x,y); 
+					}else{
+						sjs.bounceOff(x,y); 
+					}
+				});
+
+				sjs.onHit("player","jump_pad", function(x,y){
+					if(x.isAboveOf(y) == true){
+						player.pushUp(50); 
+					}else{
+						sjs.stoppedBy(x,y); 
+					}
+				});
+
+				sjs.onHit("trash",["platform","jump_pad", "powerUp","score","enemy","flag"], function(x,y){
+					y.destroy();
+					sjs.removeFromArray(level,y);
+				});
+
+				sjs.onHit("laser",["platform","jump_pad", "powerUp","score","flag"], function(x,y){
+					sjs.bounceOff(x,y);
+				});
+
+				sjs.onHit("laser",["right_screen","left_screen"], function(x,y){
+					x.destroy();
+				});//End OnHit Function
+
+				//Score
+				var score = 0;
+				var score_txt = new sjs.Text("Score: 0", 21, "green");
+				score_txt.moveTo(700, 470);
+				score_txt.fixed = true;
+				sjs.onHit("player","score", function(x,y){
+					score = score + 1;
+					score_txt.setText("Score :"+ score);
+					localStorage.setItem("score", score);
+					y.destroy();
+				});//End OnHit Functions
+				
+				//Laser Function
+				var canShoot = false;
+				sjs.onHit("player","powerUp", function(x,y){
+					canShoot = true;
+					y.destroy();
+				});
+
+				sjs.keyDown(DOWN_KEY, function(){
+					if(canShoot == true){ 
+						canShoot = false;
+						var laser = new sjs.Image("Images/laser.png");
+						laser.type = "laser";
+						laser.setSize(100,50);
+						laser.friction= 0;
+						laser.noBounds= true;
+						if(r_facing == true){
+							laser.moveTo(player.getX()+44,player.getY()+7);
+							laser.pushRight(25.5);
+							player.pushLeft(10);
+						}else{
+							laser.moveTo(player.getX()+-60,player.getY()+7);
+							laser.pushLeft(25.5);
+							player.pushRight(10);
+						}
+						setTimeout(function(){
+							canShoot = true;
+						},1500);
+					}
+				});//End KeyDown Function
+				//End Laser Function
+
+				//Trash Properties
+				var trash = new sjs.Image("Images/trash.png");
+				trash.type = "trash";
+				trash.moveTo(720,10);
+				trash.fixed = true;
+				trash.setHeight(60);
+				trash.node.style.background = "grey";
+				trash.node.style.borderTop = "grey";
+				//End Trash Properties
+				
+				//Music
+				var playM = new Audio('Music/mountain.mp3'); 
+				var musicOn = false;
+				var toggle = true; 
+
+				sjs.keyDown(SPACE_KEY, function(){
+					if(toggle == true){
+						if(musicOn == false){
+							playM.play();
+							musicOn = true;
+						}else{
+							playM.pause();
+							musicOn = false;
+						}
+						toggle = false;
+						setTimeout(function(){
+							toggle = true;
+						},1000);
+					} //End If Toggle Statement
+				}); //End KeyDown Function
+
+			}//End Start Function
+
+			//Platform Function
+			function platform(){
+				var platform = new sjs.Image("Images/platform.png");
+				level.push(platform);
+				platform.type = "platform";
+				platform.setHeight(30);
+				platform.center().offset(-sjs.gx,10);
+				platform.onMouseDown(function(){
+					platform.draggable();
+					platform.follow(sjs.mouse);
+				})
+			}//End Platform Function
+
+			//PowerUp Function
+			function powerUp(){
+				var powerUp = new sjs.Image("Images/power_up.png");
+				level.push(powerUp);
+				powerUp.type = "powerUp"; 
+				powerUp.setHeight(30);
+				powerUp.center().offset(-sjs.gx,10);
+
+				powerUp.onMouseDown(function(){
+					powerUp.draggable();
+					powerUp.follow(sjs.mouse);
+				});//End OnMouse Function
+			}//End PowerUp Function
+
+			//Function Score
+			function score(){
+				var score = new sjs.Image("Images/score.gif");
+				level.push(score);
+				score.type = "score"; 
+				score.setHeight(30);
+				score.center().offset(-sjs.gx,10);
+				score.onMouseDown(function(){
+					score.draggable();
+					score.follow(sjs.mouse);
+				});//End OnMouse Function
+			}//End Function Score
+
+			//Function Flag
+			function flag(){
+				var flag = new sjs.Image("Images/flag_bad.png");
+				level.push(flag);
+				flag.type = "flag"; 
+				flag.setHeight(80);
+				flag.center().offset(-sjs.gx,10);
+				flag.onMouseDown(function(){
+					flag.draggable();
+					flag.follow(sjs.mouse);
+				});//OnMouse Function
+			}//End Function Flag
+
+			function enemy(){
+				var enemy = new sjs.Image("Images/r_enemy.gif");
+				level.push(enemy);
+				enemy.type = "enemy"; 
+				enemy.center().offset(-sjs.gx,10);
+				enemy.friction = 0; 
+				enemy.noBounds = true; 
+				enemy.setHFlipImages("Images/l_enemy.gif","Images/r_enemy.gif");
+				enemy.onMouseDown(function(){
+					enemy.follow(sjs.mouse);
+					enemy.removeGravity();
+					enemy.stop();
+				});//End OnMouse Function
+				enemy.onMouseUp(function(){
+					enemy.unfollow(sjs.mouse);
+					enemy.setGravity();
+					enemy.pushHFacing();
+					enemy.accel=.5;
+				});//End OnMouse Function
+			}//End Function Enemy
+
+			function jumpPad(){
+				var jump_pad = new sjs.Image("Images/jump_pad.png");
+				level.push(jump_pad);
+				jump_pad.type = "jump_pad"; 
+				jump_pad.center().offset(-sjs.gx,10);
+				jump_pad.setHeight(15); 
+				jump_pad.onMouseDown(function(){
+					jump_pad.draggable();
+					jump_pad.follow(sjs.mouse);
+				});
+			}//End Function JumpPad
+		</script>
+	</head>
+	<body onload="start()">
+		<h1> Evil Space Robots </h1>
+		<center>
+			<input type="image" src="Images/platform.png" onclick="platform()">
+			<input type="image" src="Images/power_up.png" onclick="powerUp()">
+			<input type="image" src="Images/score.gif" onclick="score()">
+			<input type="image" src="Images/flag_bad.png" onclick="flag()">
+			<input type="image" src="Images/r_enemy.gif" onclick="enemy()">
+			<input type="image" src="Images/jump_pad.png" onclick="jumpPad()">
+		</center>
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>
