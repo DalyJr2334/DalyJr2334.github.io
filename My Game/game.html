@@ -1,0 +1,242 @@
+<html>
+	<head>
+		<title> Space Galactica Knockoff </title>
+		<script src="https://simplycoding.org/files/simplyjs/simply.js"></script>
+		<script>
+			var level = [];
+			function start(){
+				//Background Properties
+				sjs.open("target", 1120, 700);
+				var background = new sjs.Image("Images/space6.png");
+				background.setSize(1920, 1200);
+
+				//Player Properties
+				var player = new sjs.Image("Images/galactica_right.png");
+				player.type = "player";
+				player.setSize(160,60);
+				player.setGravity(0);
+				player.friction = .1;
+				player.noBounds = true;
+				player.center()
+				var r_facing = true;
+				sjs.scrollable(player,background);
+
+				//Player Movement Controls
+				sjs.keyDown(RIGHT_KEY, function(){
+					r_facing = true;
+					player.setImage("Images/galactica_right.png");
+					player.pushRight();
+				});
+				sjs.keyDown(LEFT_KEY, function(){
+					r_facing = false;
+					player.setImage("Images/galactica_left.png");
+					player.pushLeft();
+				});
+				sjs.keyDown(UP_KEY, function(){
+					player.pushUp();
+				});
+				sjs.keyDown(DOWN_KEY, function(){
+					player.pushDown();
+				});
+
+				//EventListener Function
+				window.addEventListener("keyup", function(e){
+					if(e.keyCode == RIGHT_KEY){
+						player.setImage("Images/galactica_right.png");
+					}else if(e.keyCode == LEFT_KEY){
+						player.setImage("Images/galactica_left.png");
+					}
+				});
+
+				//Enemies
+				//Enemy1
+				setInterval(function(){
+					if(r_facing == true){
+						var enemy1 = new sjs.Image("Images/green_right.png");
+						enemy1.type = "enemy1";
+						enemy1.setSize(110,55);
+						enemy1.moveTo(0,0);
+						enemy1.noBounds = true;
+						enemy1.friction = 0;
+						enemy1.pushDown(3);
+						enemy1.facing = 'right';
+					}else{
+						var enemy1 = new sjs.Image("Images/green_left.png");
+						enemy1.type = "enemy1";
+						enemy1.setSize(110,55);
+						enemy1.moveTo(1810,0);
+						enemy1.noBounds = true;
+						enemy1.friction = 0;
+						enemy1.pushDown(3);
+						enemy1.facing = 'left';
+					}
+					console.log('enemy1', enemy1);
+					enemy1.intervalId = setInterval(function(){
+						var e_laser1 = new sjs.Image("Images/green.png");
+						e_laser1.type = "e_laser1";
+						e_laser1.setSize(60,15);
+						e_laser1.friction= 0;
+						e_laser1.noBounds= true;
+						if(enemy1.facing == 'right'){
+							e_laser1.moveTo(enemy1.getX()+85,enemy1.getY()+22);
+							e_laser1.pushRight(25.5);
+						}else{
+							e_laser1.moveTo(enemy1.getX()+85,enemy1.getY()+22);
+							e_laser1.pushLeft(25.5);
+						}
+					},3000);
+				},5000);
+
+				//Enemy2
+				setInterval(function(){
+					if(r_facing == true){
+						var enemy2 = new sjs.Image("Images/blue_right.png");
+						enemy2.type = "enemy2";
+						enemy2.setSize(110,55);
+						enemy2.moveTo(0,0);
+						enemy2.noBounds = true;
+						enemy2.friction = 0;
+						enemy2.pushDown(6);
+						enemy2.facing = 'right';
+					}else{
+						var enemy2 = new sjs.Image("Images/blue_left.png");
+						enemy2.type = "enemy2";
+						enemy2.setSize(110,55);
+						enemy2.moveTo(1810,0);
+						enemy2.noBounds = true;
+						enemy2.friction = 0;
+						enemy2.pushDown(6);
+						enemy2.facing = 'left';
+					}
+					enemy2.intervalId = setInterval(function(){
+						var e_laser2 = new sjs.Image("Images/blue.png");
+						e_laser2.type = "e_laser2";
+						e_laser2.setSize(60,15);
+						e_laser2.friction= 0;
+						e_laser2.noBounds= true;
+						if(enemy2.facing == 'right'){
+							e_laser2.moveTo(enemy2.getX()+85,enemy2.getY()+22);
+							e_laser2.pushRight(25.5);     
+						}else{
+							e_laser2.moveTo(enemy2.getX()+85,enemy2.getY()+22);
+							e_laser2.pushLeft(25.5);
+						}
+					},6000);
+				},10000);
+
+				//Enemy3
+				setInterval(function(){
+					if(r_facing == true){
+						var enemy3 = new sjs.Image("Images/red_right.png");
+						enemy3.type = "enemy3";
+						enemy3.setSize(110,55);
+						enemy3.moveTo(0,0);
+						enemy3.noBounds = true;
+						enemy3.friction = 0;
+						enemy3.pushDown(12);
+						enemy3.facing = 'right';
+					}else{
+						var enemy3 = new sjs.Image("Images/red_left.png");
+						enemy3.type = "enemy3";
+						enemy3.setSize(110,55);
+						enemy3.moveTo(1810,0);
+						enemy3.noBounds = true;
+						enemy3.friction = 0;
+						enemy3.pushDown(12);
+						enemy3.facing = 'left';
+					}
+					enemy3.intervalId = setInterval(function(){
+						var e_laser3 = new sjs.Image("Images/red.png");
+						e_laser3.type = "e_laser3";
+						e_laser3.setSize(60,15);
+						e_laser3.friction= 0;
+						e_laser3.noBounds= true;
+						if(enemy3.facing == 'right'){
+							e_laser3.moveTo(enemy3.getX()+85,enemy3.getY()+22);
+							e_laser3.pushRight(25.5);
+						}else{
+							e_laser3.moveTo(enemy3.getX()+85,enemy3.getY()+22);
+							e_laser3.pushLeft(25.5);
+						}
+					},9000);
+				},15000);
+
+				//OnHit Functions
+				sjs.onHit("player",["right_screen","left_screen","top_screen","bottom_screen"],function(x,y){
+					sjs.stoppedBy(x,y);
+				});
+
+				sjs.onHit("enemy1",["bottom_screen","top_screen"], function(x,y){
+					sjs.bounceOff(x,y);
+				});
+				sjs.onHit("enemy2",["bottom_screen","top_screen"], function(x,y){
+					sjs.bounceOff(x,y);
+				});
+				sjs.onHit("enemy3",["bottom_screen","top_screen"], function(x,y){
+					sjs.bounceOff(x,y);
+				});
+
+				sjs.onHit("laser",["right_screen","left_screen","top_screen","bottom_screen"], function(x,y){
+					x.destroy();
+				});
+				sjs.onHit("e_laser1",["right_screen","left_screen","top_screen","bottom_screen"], function(x,y){
+					console.log('hi');
+					x.destroy();
+				});
+				sjs.onHit("e_laser2",["right_screen","left_screen","top_screen","bottom_screen"], function(x,y){
+					x.destroy();
+				});
+				sjs.onHit("e_laser3",["right_screen","left_screen","top_screen","bottom_screen"], function(x,y){
+					x.destroy();
+				});
+
+				sjs.onHit("player",["enemy1","enemy2","enemy3","e_laser1","e_laser2","e_laser3"], function(x,y){
+					console.log('killing player');
+					x.destroy();
+					window.location = "gameover.html";
+				});
+
+				//Score
+				var score = 0;
+				var score_txt = new sjs.Text("Enemies Destroyed: 0", 21, "white");
+				score_txt.moveTo(880, 660);
+				score_txt.fixed = true;
+				sjs.onHit("laser",["enemy1","enemy2","enemy3"], function(x,y){
+					score = score + 1;
+					score_txt.setText("Enemies Destroyed: "+ score);
+					localStorage.setItem("score", score);
+					clearInterval(y.intervalId);
+					x.destroy();
+					y.destroy();
+				});
+
+				//Laser Function
+				var canShoot = true;
+				sjs.keyDown(SPACE_KEY, function(){
+					if(canShoot == true){
+						canShoot = false;
+						var laser = new sjs.Image("Images/pink.png");
+						laser.type = "laser";
+						laser.setSize(60,15);
+						laser.friction= 0;
+						laser.noBounds= true;
+						if(r_facing == true){
+							laser.moveTo(player.getX()+55,player.getY()+25);
+							laser.pushRight(25.5);
+						}else{
+							laser.moveTo(player.getX()+45,player.getY()+25);
+							laser.pushLeft(25.5);     
+						}
+						setTimeout(function(){
+							canShoot = true;
+						},701);
+					}
+				});
+			}//End Start Function
+		</script>
+	</head>
+	<body onload="start()">
+		<h1> Space Galactica Knockoff </h1>
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>
