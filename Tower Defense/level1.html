@@ -79,12 +79,17 @@
 					} 
 				});
 
+				sjs.onHit("gunman","enemy",function(x,y){
+					x.destroy();
+					x.range.destroy();
+				});
+
 				sjs.onHit("range","enemy",function(x,y){ 
 					if(x.fire == true){ 
 						var gbullet = new sjs.Image("Images/bullet.png"); 
 						gbullet.type="bullet";
-						gbullet.moveTo(x.getX()+260,x.getY()+10);
-						gbullet.setSize(40, 10);
+						gbullet.moveTo(x.getX()+265,x.getY()+5);
+						gbullet.setSize(32, 8);
 						gbullet.friction=0;
 						gbullet.pushLeft(6);
 						gbullet.noBounds=true;
@@ -96,16 +101,19 @@
 					} 
 				});
 
-				sjs.onHit("gunman","enemy",function(x,y){
-					x.destroy();
-					x.range.destroy();
-				});
-
+				var hits = totalEnemies;
 				sjs.onHit("enemy","bullet",function(x,y){
+					hits--;
 					x.destroy();
 					y.destroy();
 					bolts += 10;
 					bolts_text.setText("Bolts Collected: " + bolts); 
+					if(hits <= 0){
+						var nextLevel = new sjs.Button("Congratulations! Click to go to Level 2!", function(){
+							window.location = "level2.html";
+						});
+						nextLevel.center();
+					}
 				});
 
 				sjs.onHit("enemy","right_screen",function(x,y){
