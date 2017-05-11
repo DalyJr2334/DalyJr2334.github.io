@@ -89,7 +89,7 @@
 				});
 
 				//Blocker
-				sjs.onHit("blocker","enemy",function(x,y){
+				sjs.onHit("blocker",["enemy","boss"],function(x,y){
 					y.moveTo(y.getX()-25,y.getY());
 					x.lives--;
 					if(x.lives==0){
@@ -103,7 +103,7 @@
 				});
 
 				//Gunman
-				sjs.onHit("gunman","enemy",function(x,y){
+				sjs.onHit("gunman",["enemy","boss"],function(x,y){
 					x.destroy();
 					x.range.destroy();
 				});
@@ -132,7 +132,7 @@
 				});
 
 				//Flyguy
-				sjs.onHit("flyguy","enemy",function(x,y){
+				sjs.onHit("flyguy",["enemy","boss"],function(x,y){
 					x.destroy();
 					x.flyrange.destroy();
 				});
