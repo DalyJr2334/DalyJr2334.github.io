@@ -25,7 +25,7 @@
 				});
 
 				//Enemy
-				var totalEnemies = 20;
+				var totalEnemies = 25;
 				var enemyInterval = setInterval(function(){
 					var enemy = new sjs.Image("Images/bad.gif");
 					totalEnemies--;
@@ -84,10 +84,11 @@
 					},2500);
 				});
 
-				sjs.onHit(["blocker","gunman"],"land",function(x,y){
+				sjs.onHit(["blocker","gunman","flyguy"],"land",function(x,y){
 					sjs.stoppedBy(x,y); 
 				});
 
+				//Blocker
 				sjs.onHit("blocker","enemy",function(x,y){
 					y.moveTo(y.getX()-25,y.getY());
 					x.lives--;
@@ -96,12 +97,24 @@
 					} 
 				});
 
+				sjs.onHit("blocker","boss_attack", function(x,y){
+					x.destroy();
+					y.destroy();
+				});
+
+				//Gunman
 				sjs.onHit("gunman","enemy",function(x,y){
 					x.destroy();
 					x.range.destroy();
 				});
 
-				sjs.onHit("range","enemy",function(x,y){ 
+				sjs.onHit("gunman","boss_attack", function(x,y){
+					x.destroy();
+					x.range.destroy();
+					y.destroy();
+				});
+
+				sjs.onHit("range",["enemy","boss"],function(x,y){ 
 					if(x.fire == true){ 
 						var gbullet = new sjs.Image("Images/bullet.png"); 
 						gbullet.type="bullet";
@@ -118,7 +131,19 @@
 					} 
 				});
 
-				sjs.onHit("flyrange","enemy",function(x,y){ 
+				//Flyguy
+				sjs.onHit("flyguy","enemy",function(x,y){
+					x.destroy();
+					x.flyrange.destroy();
+				});
+
+				sjs.onHit("flyguy","boss_attack", function(x,y){
+					x.destroy();
+					x.flyrange.destroy();
+					y.destroy();
+				});
+
+				sjs.onHit("flyrange",["enemy","boss"],function(x,y){ 
 					if(x.fire == true){ 
 						var gbullet = new sjs.Image("Images/bullet.png");
 						gbullet.type="bullet";
@@ -142,27 +167,75 @@
 					} 
 				});
 
-				var hits = totalEnemies;
+				//Enemy
+				var hits = totalEnemies + bosses;
 				sjs.onHit("enemy","bullet",function(x,y){
 					hits--;
 					x.destroy();
 					y.destroy();
 					bolts += 10;
-					bolts_text.setText("Bolts Collected: " + bolts); 
+					bolts_text.setText("Bolts Collected: " + bolts);
 					if(hits <= 0){
-						var nextLevel = new sjs.Button("Congratulations! Click to go to Level 2!", function(){
-							window.location = "level2.html";
+						var nextLevel = new sjs.Button("Congratulations! Click to go to Level 3!", function(){
+							window.location = "level3.html";
 						});
 						nextLevel.center();
-					}
+					} 
 				});
 
-				sjs.onHit("enemy","right_screen",function(x,y){
+				sjs.onHit(["enemy","boss"],"right_screen",function(x,y){
 					window.location="gameover.html";
 				});
+
+				//Boss
+				var boss_active = false;
+				sjs.onHit("boss","bullet",function(x,y){ 
+					y.destroy();
+					x.lives--;
+					if(x.lives <= 0){
+						x.destroy();
+						hits--;
+					}	
+					bolts += 5;
+					bolts_text.setText("Bolts Collected: " + bolts);
+					if(boss_active == false){ 
+						boss_active = true;   
+						setTimeout(function(){   
+							x.stop();   
+							x.pushUp(12);   
+							x.bounce();     
+							setTimeout(function(){   
+								x.sy = 0;
+								x.setGravity();
+							},3000); 
+						},1500); 
+					}
+					setInterval(function(){ 
+						if(x.lives >= 1){ 
+							var boss_attack = new sjs.Image("Images/block.png"); 
+							boss_attack.type="boss_attack"; 
+							boss_attack.moveTo(x.getX()+50,x.getY()+Math.floor((Math.random() * 250) + 1)); 
+							boss_attack.setSize(40,10);
+							boss_attack.friction = 0;
+							boss_attack.pushRight(5);
+							boss_attack.noBounds = true; 
+							var z = Math.random();
+							if(z < .3){
+								boss_attack.pushDown(2);
+							}else if(z < .6){
+								boss_attack.pushUp(2);
+							}else{
+								boss_attack.pushRight(2);
+							} 
+							setTimeout(function(){
+								boss_attack.destroy();
+							},5000);
+						} 
+					},1200);
+				}); 
  			}//End Function Start
 
- 			var bolts = 100;
+ 			var bolts = 150;
  			var bolts_text = "";
  			function blocker(){
  				if(bolts > 30){
