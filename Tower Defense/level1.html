@@ -71,18 +71,20 @@
 					sjs.stoppedBy(x,y); 
 				});
 
+				//Blocker
 				sjs.onHit("blocker","enemy",function(x,y){
 					y.moveTo(y.getX()-25,y.getY());
 					x.lives--;
 					if(x.lives==0){
 						x.destroy();
 					} 
-				});
+				}); 
 
+				//Gunman
 				sjs.onHit("gunman","enemy",function(x,y){
 					x.destroy();
 					x.range.destroy();
-				});
+				}); 
 
 				sjs.onHit("range","enemy",function(x,y){ 
 					if(x.fire == true){ 
@@ -101,6 +103,7 @@
 					} 
 				});
 
+				//Enemy
 				var hits = totalEnemies;
 				sjs.onHit("enemy","bullet",function(x,y){
 					hits--;
