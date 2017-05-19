@@ -198,9 +198,11 @@
 						boss_active = true;
 						setInterval(function(){
 							x.stop(); 
+							x.pushUp(12);
+							x.bounce;
 						},1500);
 					}
-					setInterval(function(){ 
+					setTimeout(function(){ 
 						if(x.lives >= 1){ 
 							var boss_attack = new sjs.Image("Images/block.png"); 
 							boss_attack.type="boss_attack"; 
