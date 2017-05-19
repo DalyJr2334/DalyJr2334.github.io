@@ -196,10 +196,8 @@
 					bolts_text.setText("Bolts Collected: " + bolts);
 					if(boss_active == false){ 
 						boss_active = true;
-						setTimeout(function(){
-							x.stop();
-							x.pushUp(12);
-							x.bounce(); 
+						setInterval(function(){
+							x.stop(); 
 						},1500);
 					}
 					setInterval(function(){ 
