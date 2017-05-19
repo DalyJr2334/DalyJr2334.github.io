@@ -191,24 +191,16 @@
 				var boss_active = false;
 				sjs.onHit("boss","bullet",function(x,y){ 
 					y.destroy();
-					x.lives--;
-					if(x.lives <= 0){
-						x.destroy();
-						hits--;
-					}	
+					x.lives--;	
 					bolts += 5;
 					bolts_text.setText("Bolts Collected: " + bolts);
 					if(boss_active == false){ 
-						boss_active = true;   
-						setTimeout(function(){   
-							x.stop();   
-							x.pushUp(12);   
-							x.bounce();     
-							setTimeout(function(){   
-								x.sy = 0;
-								x.setGravity();
-							},3000); 
-						},1500); 
+						boss_active = true;
+						setTimeout(function(){
+							x.stop();
+							x.pushUp(12);
+							x.bounce(); 
+						},1500);
 					}
 					setInterval(function(){ 
 						if(x.lives >= 1){ 
@@ -222,7 +214,7 @@
 							var z = Math.random();
 							if(z < .3){
 								boss_attack.pushDown(2);
-							}else if(z < .6){
+							}else if(z < .6) {
 								boss_attack.pushUp(2);
 							}else{
 								boss_attack.pushRight(2);
