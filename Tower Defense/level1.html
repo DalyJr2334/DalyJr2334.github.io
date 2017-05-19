@@ -127,7 +127,7 @@
  			var bolts = 100;
  			var bolts_text = "";
  			function blocker(){
- 				if(bolts > 30){
+ 				if(bolts >= 30){
  					bolts -= 30;
  					bolts_text.setText("Bolts Collected: "+bolts);
 					var blocker = new sjs.Image("Images/block.png");
