@@ -4,14 +4,14 @@
 		<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
 		<script>
 			function start(){
-				sjs.open("target",800,500);
+				sjs.open("target",1040,650);
 
 				//Background Object and Properties
 				var background = new sjs.Image("Images/background.png");
 				background.setSize(2400,sjs.getHeight());
 
 				var view = new sjs.Image("");
-				view.setSize(800,500);
+				view.setSize(1040,650);
 				view.moveTo(2400,500);
 
 				sjs.scrollable(view,background);
@@ -68,7 +68,7 @@
 				var land = new sjs.Image("");
 				land.type="land";
 				land.setSize(background.getWidth(),50);
-				land.moveTo(0,440);
+				land.moveTo(0,240);
 				land.node.style.zIndex = -1;
 
 				//Bolts
