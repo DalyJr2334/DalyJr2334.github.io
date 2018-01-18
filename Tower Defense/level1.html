@@ -32,7 +32,7 @@
 					enemy.type = "enemy"; 
 					enemy.moveTo(0,385);
 					enemy.noBounds=true;
-					enemy.setSize(50,50);
+					enemy.setSize(75,75);
 					enemy.friction = 0;	
 					enemy.pushRight(3);
 					if(totalEnemies <= 0){
@@ -132,7 +132,7 @@
  					bolts_text.setText("Bolts Collected: "+bolts);
 					var blocker = new sjs.Image("Images/block.png");
 					blocker.type = "blocker";
-					blocker.setHeight(50);
+					blocker.setSize(75,75);
 					blocker.center().offset(-sjs.gx,10);
 					blocker.lives = 7;
 					blocker.onMouseDown(function(){
@@ -161,7 +161,7 @@
 					bolts_text.setText("Bolts Collected: "+bolts);
 					var gunman = new sjs.Image("Images/gun.png"); 
 					gunman.type = "gunman";
-					gunman.setSize(50,50);
+					gunman.setSize(75,75);
 					gunman.center().offset(-sjs.gx,20);
 					gunman.onMouseDown(function(){
 						gunman.draggable();
