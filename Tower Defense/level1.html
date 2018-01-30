@@ -32,7 +32,7 @@
 					enemy.type = "enemy"; 
 					enemy.moveTo(0,400);
 					enemy.noBounds=true;
-					enemy.setSize(65,65);
+					enemy.setSize(50,50);
 					enemy.friction = 0;	
 					enemy.pushRight(3);
 					if(totalEnemies <= 0){
@@ -91,7 +91,7 @@
 						var gbullet = new sjs.Image("Images/bullet.png"); 
 						gbullet.type="bullet";
 						gbullet.moveTo(x.getX()+265,x.getY()+5);
-						gbullet.setSize(32, 8);
+						gbullet.setSize(20, 5);
 						gbullet.friction=0;
 						gbullet.pushLeft(6);
 						gbullet.noBounds=true;
@@ -161,7 +161,7 @@
 					bolts_text.setText("Bolts Collected: "+bolts);
 					var gunman = new sjs.Image("Images/gun.png"); 
 					gunman.type = "gunman";
-					gunman.setSize(65,65);
+					gunman.setSize(50,50);
 					gunman.center().offset(-sjs.gx,20);
 					gunman.onMouseDown(function(){
 						gunman.draggable();
