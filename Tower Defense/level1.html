@@ -20,7 +20,23 @@
 					enemy.friction = 0;	
 					enemy.pushRight(3);
 				},1500);
-			}	
+				
+				//Tracker
+				var tracker = new sjs.Image("");
+				tracker.type = "tracker";
+				tracker.setSize(1,sjs.getHeight());
+				tracker.moveTo(background.getWidth()/4,0); 
+				
+				//OnHits
+				sjs.onHit("enemy","tracker",function(x,y){
+					var warn = new sjs.Text("ENEMY APPROACHING!",20,"red"); warn.moveTo(view.x+100,sjs.getHeight()/2);
+					y.destroy();
+					setTimeout(function(){
+						warn.destroy(); 
+					},2500);
+				});
+				
+			}//End Start
 		</script> 
 	</head> 
 	<body onload="start()"> 
