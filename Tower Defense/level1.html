@@ -9,6 +9,20 @@
 				//Background Objects and Properties
 				var background = new sjs.Image("Images/background.jpg");
 				background.setSize(2400,sjs.getHeight());
+				
+				var view = new sjs.Image("");
+				view.setSize(800,500);
+				view.moveTo(2400,500);
+
+				sjs.scrollable(view,background);
+				
+				sjs.keyDown(LEFT_KEY, function(){
+					view.pushLeft();
+				});
+
+				sjs.keyDown(RIGHT_KEY, function(){
+					view.pushRight();
+				}); 
 
 				//Enemies
 				setInterval(function(){
