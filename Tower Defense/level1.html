@@ -41,6 +41,12 @@
 				tracker.setSize(1,sjs.getHeight());
 				tracker.moveTo(background.getWidth()/4,0); 
 				
+				var land = new sjs.Image("");
+				land.type="land";
+				land.setSize(background.getWidth(),50);
+				land.moveTo(0,440);
+				land.node.style.zIndex = -1;
+				
 				//OnHits
 				sjs.onHit("enemy","tracker",function(x,y){
 					var warn = new sjs.Text("ENEMY APPROACHING!",20,"red"); warn.moveTo(view.x+100,sjs.getHeight()/2);
@@ -50,12 +56,43 @@
 					},2500);
 				});
 				
+				sjs.onHit("blocker","land",function(x,y){
+					sjs.stoppedBy(x,y); 
+				});
+				
 			}//End Start
-		</script> 
+			
+			function blocker(){
+				var blocker = new sjs.Image("Images/block.png");
+				blocker.type = "blocker";
+				blocker.setHeight(50);
+				blocker.center().offset(-sjs.gx,10);
+				blocker.lives = 7;
+				blocker.onMouseDown(function(){
+					blocker.draggable();
+					blocker.follow(sjs.mouse);
+				});
+				blocker.onMouseUp(function(){
+					setTimeout(function(){
+						blocker.undraggable();
+					},100)
+					blocker.unfollow(sjs.mouse);
+					blocker.setGravity();
+				}); 
+			}//End Blocker
+		</script>
+		<style>
+			.images{
+				height:50px;
+				margin:15px;
+			}
+		</style> 
 	</head> 
 	<body onload="start()">
 		<center>
 			<img src="Images/block.png" class="images" onclick="blocker()"> 
+			<br>
+			<input type="button" value="30 Bolts!" onclick="blocker()">
 		</center> 
 		<div id="target" style="overflow:hidden; background-color:green; margin:auto;"></div> 
 	</body> 
