@@ -60,25 +60,41 @@
 					sjs.stoppedBy(x,y); 
 				});
 				
+				bolts_text = new sjs.Text("bolts Collected: "+bolts,18,"green");
+				bolts_text.fixed = true;	
+				
 			}//End Start
 			
+			var bolts = 100;
+			var bolts_text = ""; 
+			
 			function blocker(){
-				var blocker = new sjs.Image("Images/block.png");
-				blocker.type = "blocker";
-				blocker.setHeight(50);
-				blocker.center().offset(-sjs.gx,10);
-				blocker.lives = 7;
-				blocker.onMouseDown(function(){
-					blocker.draggable();
-					blocker.follow(sjs.mouse);
-				});
-				blocker.onMouseUp(function(){
+				if(bolts > 30){
+					bolts -= 30;
+					bolts_text.setText("bolts Collected: "+bolts);
+					var blocker = new sjs.Image("Images/blocker.png");
+					blocker.type = "blocker";
+					blocker.setHeight(30);
+					blocker.center().offset(-sjs.gx,10);
+					blocker.lives = 7;
+					blocker.onMouseDown(function(){
+						blocker.draggable();
+						blocker.follow(sjs.mouse);
+					});
+					blocker.onMouseUp(function(){
+						setTimeout(function(){
+							blocker.undraggable();
+						},100)
+						blocker.unfollow(sjs.mouse);
+						blocker.setGravity();
+					});
+				}else{
+					var no_bolts = new sjs.Text("Your bolts Lag! Collect More bolts!",20,"red");
+					no_bolts.center().offset(-sjs.gx,-200);
 					setTimeout(function(){
-						blocker.undraggable();
-					},100)
-					blocker.unfollow(sjs.mouse);
-					blocker.setGravity();
-				}); 
+						no_bolts.destroy(); 
+					},2500);
+				}
 			}//End Blocker
 		</script>
 		<style>
